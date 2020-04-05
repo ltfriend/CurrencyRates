@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<w:CirclePage xmlns="http://xamarin.com/schemas/2014/forms"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:w="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"              
+              x:Class="CurrencyRatesUI.Views.SelectCurrencyPage"
+              NavigationPage.HasNavigationBar="False"
+              RotaryFocusObject="{x:Reference list}">
+    <w:CirclePage.Content>
+        <w:CircleListView x:Name="list" HasUnevenRows="True" SeparatorVisibility="Default" ItemSelected="OnItemSelected">
+            <w:CircleListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Margin="15,15">
+                            <Label Text="{Binding CodeSymbol}"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="9"
+                                   TextColor="White"/>
+                            <Label Text="{Binding Name}"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="7"
+                                   LineBreakMode="WordWrap"
+                                   TextColor="LightGray"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </w:CircleListView.ItemTemplate>
+        </w:CircleListView>
+    </w:CirclePage.Content>
+</w:CirclePage>

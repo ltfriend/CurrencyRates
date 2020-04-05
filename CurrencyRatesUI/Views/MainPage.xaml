@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<w:CirclePage xmlns="http://xamarin.com/schemas/2014/forms"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:w="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+              xmlns:local="clr-namespace:CurrencyRatesUI"
+              xmlns:control="clr-namespace:CurrencyRatesUI.Controls"
+              xmlns:converters="clr-namespace:CurrencyRatesUI.Converters"
+              x:Class="CurrencyRatesUI.Views.MainPage"
+              NavigationPage.HasNavigationBar="False"
+              RotaryFocusObject="{x:Reference RateListView}">
+    <w:CirclePage.Resources>
+        <ResourceDictionary>
+            <converters:ItemCountToVisibilityConverter x:Key="VisibilityConverter" />
+        </ResourceDictionary>
+    </w:CirclePage.Resources>
+    <w:CirclePage.Content>
+        <StackLayout Orientation="Vertical">
+            <StackLayout HorizontalOptions="Center"
+                         VerticalOptions="FillAndExpand"
+                         IsVisible="{Binding RateList.Count, Converter={StaticResource VisibilityConverter}, ConverterParameter={x:Static converters:MainPageType.Empty}}">
+                <Label Margin="0,50,0,30"
+                       FontAttributes="Bold"
+                       FontSize="Medium"
+                       HorizontalTextAlignment="Center"
+                       Text="{x:Static local:AppResources.EmptyRateListLabel}"
+                       TextColor="#368aff" />
+                <control:ImageButton Source="currency_rates.png" Released="OnAddButtonReleased"/>
+                <Label Margin="0,30,0,50"
+                       FontSize="Small"
+                       HorizontalTextAlignment="Center"
+                       Text="{x:Static local:AppResources.AddCurrencyBtn}" />
+            </StackLayout>
+            <StackLayout HorizontalOptions="FillAndExpand"
+                         VerticalOptions="Center"
+                         IsVisible="{Binding RateList.Count, Converter={StaticResource VisibilityConverter}, ConverterParameter={x:Static converters:MainPageType.ListView}}">
+                <w:CircleListView x:Name="RateListView"
+                                  ItemsSource="{Binding RateList}"
+                                  HasUnevenRows="True"
+                                  SeparatorVisibility="Default"
+                                  HorizontalOptions="FillAndExpand"
+                                  VerticalOptions="Center">
+                    <w:CircleListView.Header>
+                        <StackLayout HorizontalOptions="FillAndExpand" Spacing="0">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnRefreshTapped" />
+                            </StackLayout.GestureRecognizers>
+                            <Label Text="{x:Static local:AppResources.UpdatedRateLabel}"
+                                   FontSize="Small"
+                                   HorizontalTextAlignment="Center"/>
+                            <StackLayout Orientation="Horizontal"
+                                         HorizontalOptions="CenterAndExpand">
+                                <Label Text="{Binding Updated, StringFormat='{0:g}'}"
+                                       FontSize="Small"
+                                       TextColor="White"
+                                       HorizontalTextAlignment="Center"/>
+                                <Image Source="refresh.png" />
+                            </StackLayout>
+                        </StackLayout>
+                    </w:CircleListView.Header>
+                    <w:CircleListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout HorizontalOptions="FillAndExpand"
+                                             VerticalOptions="FillAndExpand">
+                                    <StackLayout Orientation="Horizontal"
+                                                 HorizontalOptions="CenterAndExpand"
+                                                 VerticalOptions="CenterAndExpand"
+                                                 Margin="15,15">
+                                        <Label Text="1" TextColor="White"/>
+                                        <Label Text="{Binding Source.CodeSymbol}" TextColor="White" />
+                                        <Label Text="=" TextColor="White" />
+                                        <Label Text="{Binding Rate, StringFormat='{0:F4}'}" TextColor="White" />
+                                        <Label Text="{Binding Dest.CodeSymbol}" TextColor="White" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </w:CircleListView.ItemTemplate>
+                    <w:CircleListView.Footer>
+                        <StackLayout Padding="30,30,30,15">
+                            <Button Text="{x:Static local:AppResources.AddBtn}"
+                                    Clicked="OnFooterAddButtonClicked" />
+                        </StackLayout>
+                    </w:CircleListView.Footer>
+                </w:CircleListView>
+            </StackLayout>
+        </StackLayout>
+    </w:CirclePage.Content>
+</w:CirclePage>

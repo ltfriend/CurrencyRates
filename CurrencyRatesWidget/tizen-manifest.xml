@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.ptolkachev.currency-rates-widget" version="1.0.0" api-version="4" xmlns="http://tizen.org/ns/packages">
+    <author href="https://tpvdev.ru">Pavel Tolkachev</author>
+    <description>Current currency rates viewer widget.</description>
+    <profile name="wearable" />
+    <widget-application appid="com.ptolkachev.currency-rates-widget" exec="CurrencyRatesWidget.dll" multiple="false" nodisplay="false" taskmanage="true" type="dotnet" launch_mode="single">
+        <label>CurrencyRates</label>
+        <icon>CurrencyRatesWidget.png</icon>
+        <metadata key="http://tizen.org/metadata/prefer_dotnet_aot" value="true" />
+        <support-size preview="CurrencyRatesWidget.png">2x2</support-size>
+        <label xml:lang="en-us">Currency Rates</label>
+        <label xml:lang="ru-ru">Курсы валют</label>
+        <splash-screens />
+    </widget-application>
+    <shortcut-list />
+    <privileges />
+    <dependencies />
+    <provides-appdefined-privileges />
+</manifest>

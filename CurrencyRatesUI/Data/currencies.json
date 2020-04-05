@@ -1,0 +1,182 @@
+[
+{
+"Code": "051",
+"CodeSymbol": "AMD",
+"Name": "Армянский драм"
+},
+{
+"Code": "036",
+"CodeSymbol": "AUD",
+"Name": "Австралийский доллар"
+},
+{
+"Code": "944",
+"CodeSymbol": "AZN",
+"Name": "Азербайджанский манат"
+},
+{
+"Code": "975",
+"CodeSymbol": "BGN",
+"Name": "Болгарский лев"
+},
+{
+"Code": "986",
+"CodeSymbol": "BRL",
+"Name": "Бразильский реал"
+},
+{
+"Code": "933",
+"CodeSymbol": "BYN",
+"Name": "Белорусский рубль"
+},
+{
+"Code": "974",
+"CodeSymbol": "BYR",
+"Name": "Белорусский рубль"
+},
+{
+"Code": "124",
+"CodeSymbol": "CAD",
+"Name": "Канадский доллар"
+},
+{
+"Code": "756",
+"CodeSymbol": "CHF",
+"Name": "Швейцарский франк"
+},
+{
+"Code": "156",
+"CodeSymbol": "CNY",
+"Name": "Юань"
+},
+{
+"Code": "203",
+"CodeSymbol": "CZK",
+"Name": "Чешская крона"
+},
+{
+"Code": "208",
+"CodeSymbol": "DKK",
+"Name": "Датская крона"
+},
+{
+"Code": "978",
+"CodeSymbol": "EUR",
+"Name": "Евро"
+},
+{
+"Code": "826",
+"CodeSymbol": "GBP",
+"Name": "Фунт стерлингов"
+},
+{
+"Code": "344",
+"CodeSymbol": "HKD",
+"Name": "Гонконгский доллар"
+},
+{
+"Code": "348",
+"CodeSymbol": "HUF",
+"Name": "Форинт"
+},
+{
+"Code": "356",
+"CodeSymbol": "INR",
+"Name": "Индийская рупия"
+},
+{
+"Code": "392",
+"CodeSymbol": "JPY",
+"Name": "Иена"
+},
+{
+"Code": "417",
+"CodeSymbol": "KGS",
+"Name": "Сом"
+},
+{
+"Code": "410",
+"CodeSymbol": "KRW",
+"Name": "Вона"
+},
+{
+"Code": "398",
+"CodeSymbol": "KZT",
+"Name": "Тенге"
+},
+{
+"Code": "498",
+"CodeSymbol": "MDL",
+"Name": "Молдавский лей"
+},
+{
+"Code": "578",
+"CodeSymbol": "NOK",
+"Name": "Норвежская крона"
+},
+{
+"Code": "985",
+"CodeSymbol": "PLN",
+"Name": "Злотый"
+},
+{
+"Code": "946",
+"CodeSymbol": "RON",
+"Name": "Румынский лей"
+},
+{
+"Code": "643",
+"CodeSymbol": "RUB",
+"Name": "Российский рубль"
+},
+{
+"Code": "752",
+"CodeSymbol": "SEK",
+"Name": "Шведская крона"
+},
+{
+"Code": "702",
+"CodeSymbol": "SGD",
+"Name": "Сингапурский доллар"
+},
+{
+"Code": "972",
+"CodeSymbol": "TJS",
+"Name": "Сомони"
+},
+{
+"Code": "934",
+"CodeSymbol": "TMT",
+"Name": "Новый туркменский манат"
+},
+{
+"Code": "949",
+"CodeSymbol": "TRY",
+"Name": "Турецкая лира"
+},
+{
+"Code": "980",
+"CodeSymbol": "UAH",
+"Name": "Гривна"
+},
+{
+"Code": "840",
+"CodeSymbol": "USD",
+"Name": "Доллар США"
+},
+{
+"Code": "860",
+"CodeSymbol": "UZS",
+"Name": "Узбекский сум"
+},
+{
+"Code": "960",
+"CodeSymbol": "XDR",
+"Name": "СДР (специальные права заимствования)"
+},
+{
+"Code": "710",
+"CodeSymbol": "ZAR",
+"Name": "Рэнд"
+}
+]

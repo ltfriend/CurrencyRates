@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<w:CirclePage xmlns="http://xamarin.com/schemas/2014/forms"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:w="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+              xmlns:local="clr-namespace:CurrencyRatesUI"
+              x:Class="CurrencyRatesUI.Views.AddRatePage"
+              NavigationPage.HasNavigationBar="False">
+    <w:CirclePage.Content>
+        <StackLayout HorizontalOptions="Center"
+                     VerticalOptions="FillAndExpand">
+            <Label Margin="0,50,0,50"
+                       FontAttributes="Bold"
+                       FontSize="Medium"
+                       HorizontalTextAlignment="Center"
+                       Text="{x:Static local:AppResources.AddRatePageTitle}"
+                       TextColor="#368aff" />
+            <StackLayout HorizontalOptions="CenterAndExpand"
+                         Orientation="Horizontal">
+                <Label x:Name="firstCurrencyLabel"
+                       BackgroundColor="#c7c7c7"
+                       TextColor="#070707"
+                       FontSize="16"
+                       WidthRequest="120"
+                       HeightRequest="80"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFirstCurrencyTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text=" / "
+                       FontSize="16"
+                       HeightRequest="80"
+                       VerticalTextAlignment="Center"/>
+                <Label x:Name="secondCurrencyLabel"
+                       BackgroundColor="#c7c7c7"
+                       TextColor="#070707"
+                       FontSize="16"
+                       WidthRequest="120"
+                       HeightRequest="80"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSecondCurrencyTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+        </StackLayout>
+    </w:CirclePage.Content>
+    <w:CirclePage.ActionButton>
+        <w:ActionButtonItem Icon="ic_popup_btn_check.png"
+                            Clicked="OnAddRate" />
+    </w:CirclePage.ActionButton>
+</w:CirclePage>
