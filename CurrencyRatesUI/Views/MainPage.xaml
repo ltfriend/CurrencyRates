@@ -11,6 +11,8 @@
     <w:CirclePage.Resources>
         <ResourceDictionary>
             <converters:ItemCountToVisibilityConverter x:Key="VisibilityConverter" />
+            <converters:ChangeRateToStringConverter x:Key="ChangeRateToStringConverter" />
+            <converters:ChangeRateToColorConverter x:Key="ChangeRateToColorConverter" />
         </ResourceDictionary>
     </w:CirclePage.Resources>
     <w:CirclePage.Content>
@@ -61,17 +63,23 @@
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout HorizontalOptions="FillAndExpand"
-                                             VerticalOptions="FillAndExpand">
+                                             VerticalOptions="FillAndExpand"
+                                             Padding="5,5"
+                                             Spacing="0">
                                     <StackLayout Orientation="Horizontal"
                                                  HorizontalOptions="CenterAndExpand"
-                                                 VerticalOptions="CenterAndExpand"
-                                                 Margin="15,15">
+                                                 VerticalOptions="CenterAndExpand">
                                         <Label Text="1" TextColor="White"/>
                                         <Label Text="{Binding Source.CodeSymbol}" TextColor="White" />
                                         <Label Text="=" TextColor="White" />
                                         <Label Text="{Binding Rate, StringFormat='{0:F4}'}" TextColor="White" />
                                         <Label Text="{Binding Dest.CodeSymbol}" TextColor="White" />
                                     </StackLayout>
+                                    <Label Text="{Binding ChangeRate, Converter={StaticResource ChangeRateToStringConverter}}"
+                                           Margin="0,-8,0,0"
+                                           TextColor="{Binding ChangeRate,Converter={StaticResource ChangeRateToColorConverter}}"
+                                           FontSize="Micro"
+                                           HorizontalOptions="Center"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

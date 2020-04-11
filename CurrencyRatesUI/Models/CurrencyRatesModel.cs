@@ -99,21 +99,30 @@ namespace CurrencyRatesUI.Models {
         }
 
         private async Task LoadCurrencyRateAsync(CurrencyRate currencyRate) {
+            DateTime nowDate = DateTime.Now;
+            DateTime prevDate = nowDate - TimeSpan.FromDays(1);
+
             double sourceRate = currencyRate.Source.Code == MainCurrencyCode ?
-                1 : await GetCurrencyRateAsync(currencyRate.Source.Code);
+                1 : await GetCurrencyRateAsync(currencyRate.Source.Code, nowDate);
             double destRate = currencyRate.Dest.Code == MainCurrencyCode ?
-                1 : await GetCurrencyRateAsync(currencyRate.Dest.Code);
+                1 : await GetCurrencyRateAsync(currencyRate.Dest.Code, nowDate);
             currencyRate.Rate = destRate == 0 ? 0 : sourceRate / destRate;
+
+            double prevSourceRate = currencyRate.Source.Code == MainCurrencyCode ?
+                1 : await GetCurrencyRateAsync(currencyRate.Source.Code, prevDate);
+            double prevDestRate = currencyRate.Dest.Code == MainCurrencyCode ?
+                1 : await GetCurrencyRateAsync(currencyRate.Dest.Code, prevDate);
+            currencyRate.PrevRate = prevDestRate == 0 ? 0 : prevSourceRate / prevDestRate;
         }
 
         private void SaveRateList() {
             CurrencyRatesPersistentHandler.SerializeAsync(CurrencyRateList).Wait();
         }
 
-        private async Task<double> GetCurrencyRateAsync(string code) {
+        private async Task<double> GetCurrencyRateAsync(string code, DateTime date) {
             var client = new HttpClient();
             var requestUri = string.Format(RequestUriTemplate, code,
-                DateTime.Now.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture));
+                date.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture));
             var response = await client.GetAsync(requestUri);
 
             if (!response.IsSuccessStatusCode) {

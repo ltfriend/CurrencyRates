@@ -35,6 +35,20 @@ namespace CurrencyRatesUI.Models {
                 if (_rate != value) {
                     _rate = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rate)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ChangeRate)));
+                }
+            }
+        }
+
+        private double _prevRate;
+        [JsonProperty(PropertyName = "PrevRate")]
+        public double PrevRate {
+            get { return _prevRate; }
+            set {
+                if (_prevRate != value) {
+                    _prevRate = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PrevRate)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ChangeRate)));
                 }
             }
         }
@@ -52,7 +66,11 @@ namespace CurrencyRatesUI.Models {
         }
 
         [JsonIgnore]
-        public CurrencyRate Self => this;
+        public double ChangeRate {
+            get {
+                return Rate - PrevRate;
+            }
+        }
 
         public override string ToString() {
             return $"{Source.CodeSymbol} / {Dest.CodeSymbol}";
