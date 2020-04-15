@@ -14,6 +14,7 @@
     <shortcut-list />
     <privileges>
         <privilege>http://tizen.org/privilege/internet</privilege>
+        <privilege>http://tizen.org/privilege/network.get</privilege>
     </privileges>
     <dependencies />
     <provides-appdefined-privileges />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Globalization;
@@ -12,6 +13,7 @@ namespace CurrencyRatesUI.Models {
     public class CurrencyRatesModel {
         private const string MainCurrencyCode = "643";
         private const string RequestUriTemplate = "http://cbrates.rbc.ru/tsv/{0}/{1}.tsv";
+        public readonly TimeSpan UpdateRatesTime = new TimeSpan(10, 0, 0);
 
         public IList<CurrencyRate> CurrencyRateList { get; set; }
         public ObservableCollection<CurrencyRate> ObservableCurrencyRateList { get; set; }
@@ -31,10 +33,13 @@ namespace CurrencyRatesUI.Models {
             }
         }
 
+        public bool IsRefreshing { get; private set; }
+
         public static void Initialize() {
             Instance = new CurrencyRatesModel {
                 ObservableCurrencyRateList = new ObservableCollection<CurrencyRate>(),
-                CurrencyRateList = CurrencyRatesPersistentHandler.Deserialize()
+                CurrencyRateList = CurrencyRatesPersistentHandler.Deserialize(),
+                IsRefreshing = false
             };
 
             if (TizenPreference.Contains("Updated")) {
@@ -58,11 +63,12 @@ namespace CurrencyRatesUI.Models {
             SaveRateList();
 
             Task.Run(async () => {
+                bool success = false;
                 //TODO: обработка ошибок.
                 try {
                     await LoadCurrencyRateAsync(rate);
                     SaveRateList();
-                    RatesUpdated();
+                    success = true;
                 } catch (HttpException ex) {
                     Console.WriteLine($"[Load currency rate {rate} failed] HTTP status code: {ex.StatusCode}");
                 } catch (InvalidRateResponseException ex) {
@@ -70,11 +76,20 @@ namespace CurrencyRatesUI.Models {
                 } catch (HttpRequestException ex) {
                     Console.WriteLine($"[Load currency rate {rate} failed] {ex.Message}");
                 }
+
+                RatesUpdated(success);
             });
+        }
+
+        public void DeleteCurrencyRate(CurrencyRate rate) {
+            CurrencyRateList.Remove(rate);
+            ObservableCurrencyRateList.Remove(rate);
+            SaveRateList();
         }
 
         public async Task RefreshRatesAsync() {
             bool wereErrors = false;
+            IsRefreshing = true;
 
             foreach (var rate in ObservableCurrencyRateList) {
                 //TODO: обработка ошибок.
@@ -94,19 +109,44 @@ namespace CurrencyRatesUI.Models {
 
             if (!wereErrors) {
                 SaveRateList();
-                RatesUpdated();
             }
+
+            RatesUpdated(!wereErrors);
         }
 
         private async Task LoadCurrencyRateAsync(CurrencyRate currencyRate) {
-            DateTime nowDate = DateTime.Now;
-            DateTime prevDate = nowDate - TimeSpan.FromDays(1);
+            DateTime nowDate = DateTime.UtcNow;
+            bool tomorrow = false;
 
-            double sourceRate = currencyRate.Source.Code == MainCurrencyCode ?
-                1 : await GetCurrencyRateAsync(currencyRate.Source.Code, nowDate);
-            double destRate = currencyRate.Dest.Code == MainCurrencyCode ?
-                1 : await GetCurrencyRateAsync(currencyRate.Dest.Code, nowDate);
-            currencyRate.Rate = destRate == 0 ? 0 : sourceRate / destRate;
+            if (nowDate.TimeOfDay > UpdateRatesTime) {
+                // Должный быть доступны курсы на завтрашний день.
+                tomorrow = true;
+                nowDate += TimeSpan.FromDays(1);
+            }
+
+            bool rateExists = false;
+
+            while (!rateExists) {
+                try {
+                    double sourceRate = currencyRate.Source.Code == MainCurrencyCode ?
+                        1 : await GetCurrencyRateAsync(currencyRate.Source.Code, nowDate);
+                    double destRate = currencyRate.Dest.Code == MainCurrencyCode ?
+                        1 : await GetCurrencyRateAsync(currencyRate.Dest.Code, nowDate);
+
+                    currencyRate.Rate = destRate == 0 ? 0 : sourceRate / destRate;
+                    rateExists = true;
+                } catch (HttpException ex) {
+                    if (ex.StatusCode == HttpStatusCode.NotFound && tomorrow) {
+                        // Курсы на завтрашний день отсутствуют. Необходимо загрузить сегодняшние курсы.
+                        nowDate -= TimeSpan.FromDays(1);
+                        tomorrow = false;
+                    } else {
+                        throw ex;
+                    }
+                }
+            }
+
+            DateTime prevDate = nowDate - TimeSpan.FromDays(1);
 
             double prevSourceRate = currencyRate.Source.Code == MainCurrencyCode ?
                 1 : await GetCurrencyRateAsync(currencyRate.Source.Code, prevDate);
@@ -141,9 +181,13 @@ namespace CurrencyRatesUI.Models {
                 throw new InvalidRateResponseException("Rate is not number");
             }
         }
+ 
+        private void RatesUpdated(bool success) {
+            if (success) {
+                Updated = DateTime.Now;
+            }
 
-        private void RatesUpdated() {
-            Updated = DateTime.Now;
+            IsRefreshing = false;
             OnRatesUpdated?.Invoke(this, EventArgs.Empty);
         }
     }

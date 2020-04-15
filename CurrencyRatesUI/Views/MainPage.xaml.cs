@@ -1,5 +1,6 @@
 ﻿using System;
 using Tizen.Wearable.CircularUI.Forms;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using CurrencyRatesUI.Models;
 using CurrencyRatesUI.ViewModels;
@@ -12,6 +13,9 @@ namespace CurrencyRatesUI.Views {
 
             InitializeComponent();
 
+            //TODO: Хорошо бы убирать кнопку меню, когда список пустой
+            // (может, заполнять динамически, потому что методов скрыть не было найдено).
+
             CurrencyRatesModel.Instance.OnRatesUpdated += OnRatesUpdated;
         }
 
@@ -23,7 +27,39 @@ namespace CurrencyRatesUI.Views {
             AddRate();
         }
 
+        private void OnDeleteButtonClicked(object sender, EventArgs e) {
+            if (RateListView.SelectedItem == null) {
+                return;
+            }
+
+            var selectedRate = RateListView.SelectedItem as CurrencyRate;
+
+            var popup = new TwoButtonPopup() {
+                FirstButton = new MenuItem() {
+                    IconImageSource = "ic_popup_btn_check.png",
+                    IsDestructive = true
+                },
+                SecondButton = new MenuItem() {
+                    IconImageSource = "ic_popup_btn_cancel.png"
+                },
+                Content = new Label {
+                    Text = $"Delete rate\n{selectedRate}?", // TODO: Translate
+                    VerticalOptions = LayoutOptions.FillAndExpand,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalTextAlignment = TextAlignment.Center
+                }
+            };
+            popup.BackButtonPressed += (s, args) => { popup.Dismiss(); };
+            popup.SecondButton.Clicked += (s, args) => { popup.Dismiss(); };
+            popup.FirstButton.Clicked += (s, args) => {
+                CurrencyRatesModel.Instance.DeleteCurrencyRate(selectedRate);
+                popup.Dismiss();
+            };
+            popup.Show();
+        }
+
         private async void OnRefreshTapped(object sender, EventArgs e) {
+            (BindingContext as MainPageModel).IsNotRefreshing = false;
             await CurrencyRatesModel.Instance.RefreshRatesAsync();
         }
 
@@ -32,7 +68,9 @@ namespace CurrencyRatesUI.Views {
         }
 
         private void OnRatesUpdated(object sender, EventArgs e) {
-            ((MainPageModel)BindingContext).Updated = DateTime.Now;
+            MainPageModel model = BindingContext as MainPageModel;
+            model.Updated = CurrencyRatesModel.Instance.Updated;
+            model.IsNotRefreshing = true;
         }
     }
 }

@@ -55,7 +55,7 @@
                                        FontSize="Small"
                                        TextColor="White"
                                        HorizontalTextAlignment="Center"/>
-                                <Image Source="refresh.png" />
+                                <Image Source="refresh.png" IsVisible="{Binding IsNotRefreshing}" />
                             </StackLayout>
                         </StackLayout>
                     </w:CircleListView.Header>
@@ -84,14 +84,24 @@
                             </ViewCell>
                         </DataTemplate>
                     </w:CircleListView.ItemTemplate>
-                    <w:CircleListView.Footer>
+                    <!--<w:CircleListView.Footer>
                         <StackLayout Padding="30,30,30,15">
                             <Button Text="{x:Static local:AppResources.AddBtn}"
                                     Clicked="OnFooterAddButtonClicked" />
                         </StackLayout>
-                    </w:CircleListView.Footer>
+                    </w:CircleListView.Footer>-->
                 </w:CircleListView>
             </StackLayout>
         </StackLayout>
     </w:CirclePage.Content>
+    <w:CirclePage.ToolbarItems>
+        <w:CircleToolbarItem
+            Text="{x:Static local:AppResources.AddCurrencyBtn}"
+            Icon="appbar.add.png"
+            Clicked="OnFooterAddButtonClicked"/>
+        <w:CircleToolbarItem
+            Text="{x:Static local:AppResources.DeleteCurrencyBtn}"
+            Icon="appbar.delete.png"
+            Clicked="OnDeleteButtonClicked"/>
+    </w:CirclePage.ToolbarItems>
 </w:CirclePage>

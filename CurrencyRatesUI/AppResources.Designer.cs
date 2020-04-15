@@ -79,11 +79,20 @@ namespace CurrencyRatesUI {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Add rate.
         /// </summary>
         internal static string AddRatePageTitle {
             get {
                 return ResourceManager.GetString("AddRatePageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string DeleteCurrencyBtn {
+            get {
+                return ResourceManager.GetString("DeleteCurrencyBtn", resourceCulture);
             }
         }
         

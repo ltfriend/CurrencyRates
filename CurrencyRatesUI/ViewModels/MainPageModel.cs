@@ -13,8 +13,15 @@ namespace CurrencyRatesUI.ViewModels {
             set => SetProperty(ref _updated, value);
         }
 
+        private bool _isNotRefreshing;
+        public bool IsNotRefreshing {
+            get => _isNotRefreshing;
+            set => SetProperty(ref _isNotRefreshing, value);
+        }
+
         public MainPageModel() {
             Updated = CurrencyRatesModel.Instance.Updated;
+            IsNotRefreshing = !CurrencyRatesModel.Instance.IsRefreshing;
         }
     }
 }

@@ -126,6 +126,9 @@
   <data name="AddRatePageTitle" xml:space="preserve">
     <value>Add rate</value>
   </data>
+  <data name="DeleteCurrencyBtn" xml:space="preserve">
+    <value>Delete rate</value>
+  </data>
   <data name="EmptyRateListLabel" xml:space="preserve">
     <value>Currency Rates</value>
   </data>
