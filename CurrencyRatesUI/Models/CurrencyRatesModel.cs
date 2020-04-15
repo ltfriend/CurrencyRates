@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Globalization;
+using Tizen.Network.Connection;
 using CurrencyRatesUI.Utils;
 
 using TizenPreference = Tizen.Applications.Preference;
@@ -139,7 +140,9 @@ namespace CurrencyRatesUI.Models {
                     if (ex.StatusCode == HttpStatusCode.NotFound && tomorrow) {
                         // Курсы на завтрашний день отсутствуют. Необходимо загрузить сегодняшние курсы.
                         nowDate -= TimeSpan.FromDays(1);
+#pragma warning disable IDE0059 // Ненужное присваивание значения - На самом деле оно нужное! IDE "тупит".
                         tomorrow = false;
+#pragma warning restore IDE0059 // Ненужное присваивание значения
                     } else {
                         throw ex;
                     }
@@ -160,10 +163,19 @@ namespace CurrencyRatesUI.Models {
         }
 
         private async Task<double> GetCurrencyRateAsync(string code, DateTime date) {
-            var client = new HttpClient();
+            HttpClient httpClient;
+            string proxyAddr = ConnectionManager.GetProxy(AddressFamily.IPv4);
+
+            if (string.IsNullOrEmpty(proxyAddr)) {
+                httpClient = new HttpClient();
+            } else {
+                var httpClientHandler = new HttpClientHandler() { Proxy = new WebProxy(proxyAddr) };
+                httpClient = new HttpClient(httpClientHandler, true);
+            }
+
             var requestUri = string.Format(RequestUriTemplate, code,
                 date.ToString("yyyy/MM/dd", CultureInfo.InvariantCulture));
-            var response = await client.GetAsync(requestUri);
+            var response = await httpClient.GetAsync(requestUri);
 
             if (!response.IsSuccessStatusCode) {
                 throw new HttpException(response.StatusCode);
