@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddBtn" xml:space="preserve">
-    <value>Add</value>
+    <value>Добавить</value>
   </data>
   <data name="AddCurrencyBtn" xml:space="preserve">
-    <value>Add rate</value>
+    <value>Добавить курс</value>
   </data>
   <data name="AddRatePageTitle" xml:space="preserve">
-    <value>Add rate</value>
+    <value>Добавить курс</value>
   </data>
   <data name="DeleteCurrencyBtn" xml:space="preserve">
-    <value>Delete</value>
+    <value>Удалить</value>
   </data>
   <data name="DeleteRateQuestion" xml:space="preserve">
-    <value>Delete rate</value>
+    <value>Удалить курс</value>
   </data>
   <data name="EmptyRateListLabel" xml:space="preserve">
-    <value>Currency Rates</value>
+    <value>Курсы валют</value>
   </data>
   <data name="UpdatedRateLabel" xml:space="preserve">
-    <value>Updated at:</value>
+    <value>Обновлено:</value>
   </data>
 </root>

@@ -5,7 +5,6 @@ using CurrencyRatesUI.Views;
 using CurrencyRatesUI.ViewModels;
 
 namespace CurrencyRatesUI {
-    //TODO: Перевести на русский язык.
     public partial class App : Application {
         readonly MainPage firstPage;
 
@@ -17,7 +16,6 @@ namespace CurrencyRatesUI {
 
         protected override void OnStart() {
             base.OnStart();
-            //TODO: Добавить обновление по расписанию?
 
             if (CurrencyRatesModel.Instance.CurrencyRateList.Count > 0) {
                 RefreshRates();

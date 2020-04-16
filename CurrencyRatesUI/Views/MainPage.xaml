@@ -96,7 +96,7 @@
     </w:CirclePage.Content>
     <w:CirclePage.ToolbarItems>
         <w:CircleToolbarItem
-            Text="{x:Static local:AppResources.AddCurrencyBtn}"
+            Text="{x:Static local:AppResources.AddBtn}"
             Icon="appbar.add.png"
             Clicked="OnFooterAddButtonClicked"/>
         <w:CircleToolbarItem

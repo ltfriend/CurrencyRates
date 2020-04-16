@@ -88,11 +88,20 @@ namespace CurrencyRatesUI {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Delete rate.
         /// </summary>
         internal static string DeleteCurrencyBtn {
             get {
                 return ResourceManager.GetString("DeleteCurrencyBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string DeleteRateQuestion {
+            get {
+                return ResourceManager.GetString("DeleteRateQuestion", resourceCulture);
             }
         }
         

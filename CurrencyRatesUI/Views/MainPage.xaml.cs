@@ -43,7 +43,7 @@ namespace CurrencyRatesUI.Views {
                     IconImageSource = "ic_popup_btn_cancel.png"
                 },
                 Content = new Label {
-                    Text = $"Delete rate\n{selectedRate}?", // TODO: Translate
+                    Text = $"{AppResources.DeleteRateQuestion}\n{selectedRate}?",
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HorizontalTextAlignment = TextAlignment.Center,
                     VerticalTextAlignment = TextAlignment.Center
