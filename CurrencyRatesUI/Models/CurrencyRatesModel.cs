@@ -89,7 +89,7 @@ namespace CurrencyRatesUI.Models {
         }
 
         public async Task RefreshRatesAsync() {
-            bool wereErrors = false;
+            bool wasErrors = false;
             IsRefreshing = true;
 
             foreach (var rate in ObservableCurrencyRateList) {
@@ -98,21 +98,21 @@ namespace CurrencyRatesUI.Models {
                     await LoadCurrencyRateAsync(rate);
                 } catch (HttpException ex) {
                     Console.WriteLine($"[Load currency rate {rate} failed] HTTP status code: {ex.StatusCode}");
-                    wereErrors = true;
+                    wasErrors = true;
                 } catch (InvalidRateResponseException ex) {
                     Console.WriteLine($"[Load currency rate {rate} failed] {ex.Message}");
-                    wereErrors = true;
+                    wasErrors = true;
                 } catch (HttpRequestException ex) {
                     Console.WriteLine($"[Load currency rate {rate} failed] {ex.Message}");
-                    wereErrors = true;
+                    wasErrors = true;
                 }
             }
 
-            if (!wereErrors) {
+            if (!wasErrors) {
                 SaveRateList();
             }
 
-            RatesUpdated(!wereErrors);
+            RatesUpdated(!wasErrors);
         }
 
         private async Task LoadCurrencyRateAsync(CurrencyRate currencyRate) {
